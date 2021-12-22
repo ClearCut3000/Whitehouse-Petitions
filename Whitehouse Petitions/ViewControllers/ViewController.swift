@@ -15,14 +15,14 @@ class ViewController: UITableViewController {
   //MARK: - ViewController LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    setNavigationItems()
     performSelector(inBackground: #selector (fetchJSON), with: nil)
   }
 
 //MARK: - UI Methods
 
-  @objc func fetchJSON(){
+  @objc func fetchJSON() {
     let urlString: String
-    setNavigationItems()
     if navigationController?.tabBarItem.tag == 0 {
       urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
     } else {
@@ -48,8 +48,8 @@ class ViewController: UITableViewController {
   @objc func addFilter(){
     let alert = UIAlertController(title: "Please, enter some text for search/filtering.", message: nil, preferredStyle: .alert)
     alert.addTextField()
-    let filter = UIAlertAction(title: "Submit", style: .default) { [weak self, weak alert] action in
-      guard let someFilterWords = alert?.textFields?[0].text else { return }
+    let filter = UIAlertAction(title: "Submit", style: .default) { [weak self] action in
+      guard let someFilterWords = alert.textFields?[0].text else { return }
       self?.filter(someFilterWords)
     }
     alert.addAction(filter)
@@ -111,7 +111,5 @@ class ViewController: UITableViewController {
     viewController.detailItem = petitions[indexPath.row]
     navigationController?.pushViewController(viewController, animated: true)
   }
-
-
 }
 
